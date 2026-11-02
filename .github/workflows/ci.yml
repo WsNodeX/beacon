@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Test on Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -t .
+
+      - name: CLI smoke test + demo
+        run: |
+          python -m beacon.cli demo
+          python examples/demo.py
+          mkdir -p /tmp/beacon_docs
+          printf 'Search engines use BM25 to rank documents by term frequency.\n' > /tmp/beacon_docs/a.txt
+          printf 'A bloom filter is a probabilistic set with no false negatives.\n' > /tmp/beacon_docs/b.txt
+          python -m beacon.cli index --dir /tmp/beacon_docs --store /tmp/beacon_idx.json
+          python -m beacon.cli query --store /tmp/beacon_idx.json --text "how to rank documents by term frequency" --top-k 2
