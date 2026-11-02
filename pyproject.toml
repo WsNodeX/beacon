@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "beacon"
+version = "1.0.0"
+description = "Hybrid retrieval & RAG pipeline toolkit for Python — dense + sparse fusion, re-ranking, zero dependencies, fully offline."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+keywords = ["retrieval", "rag", "bm25", "vector-search", "semantic-search", "embeddings", "nlp"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Text Processing :: Indexing",
+]
+
+[project.urls]
+Homepage = "https://github.com/WsNodeX/beacon"
+Repository = "https://github.com/WsNodeX/beacon"
+
+[tool.setuptools]
+packages = ["beacon", "beacon.core"]
+
+[tool.setuptools.package-data]
+beacon = ["py.typed"]

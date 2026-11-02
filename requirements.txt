@@ -1,0 +1,2 @@
+# Beacon has zero runtime dependencies.
+# The entire toolkit runs on the Python 3.9+ standard library.
